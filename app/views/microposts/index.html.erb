@@ -6,7 +6,11 @@
   <% @microposts.each do |micropost| %>
     <%= render micropost %>
     <p>
+    <% if defined?(@user) %>
+      <%= link_to "Show this micropost", user_micropost_path(@user, micropost) %>
+    <% else %>
       <%= link_to "Show this micropost", micropost %>
+    <% end %>
     </p>
   <% end %>
 </div>

@@ -21,6 +21,7 @@
       <strong>Post Body:</strong>
       <%= micropost.content %>
     </p>
+    <%= link_to "Show this micropost", user_micropost_path(@user, micropost) %>
   <% end %>
 </ul>
 

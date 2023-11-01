@@ -5,14 +5,18 @@ Rails.application.routes.draw do
   # end
   resources :users do
     resources :microposts do
-      resources :comments
+      resources :comments, only: [:new, :create]
     end
   end
-  resources :users, only: [:show] do
-    resources :microposts, only: [:new, :create]
-  end
+  # resources :users, only: [:show] do
+  #   resources :microposts, only: [:new, :create]
+  # end
   resources :users do
     resources :microposts, only: [:new, :create]
+  end
+
+  resources :microposts do
+    resources :comments
   end
   resources :users
   resources :microposts
