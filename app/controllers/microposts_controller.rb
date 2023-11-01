@@ -13,7 +13,12 @@ class MicropostsController < ApplicationController
 
   # GET /microposts/new
   def new
+    if params.key?(:user_id)
+      @user = User.find(params[:user_id])
+    end
+
     @micropost = Micropost.new
+    # @micropost = @user.microposts.build(micropost_params)
   end
 
   # GET /microposts/1/edit
@@ -22,23 +27,32 @@ class MicropostsController < ApplicationController
 
   # POST /microposts or /microposts.json
   def create
-    # @user = User.find(params[:id])
-    # puts @user.id
-    # puts @user
-    # puts user
-    # @micropost = @user.microposts.create(micropost_params)
+    if params.key?(:user_id)
+      @user = User.find(params[:user_id])
+      @micropost = @user.microposts.build(micropost_params)
 
-    @micropost = Micropost.new(micropost_params)
     # @micropost = @user.microposts.create(micropost_params)
     # redirect_to micropost_path(@user)
 
-    respond_to do |format|
-      if @micropost.save
-        format.html { redirect_to micropost_url(@micropost), notice: "Micropost was successfully created." }
-        format.json { render :show, status: :created, location: @micropost }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @micropost.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @micropost.save
+          format.html { redirect_to micropost_url(@user), notice: "Micropost was successfully created." }
+          format.json { render :show, status: :created, location: @micropost }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @micropost.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      @micropost = Micropost.new(micropost_params)
+      respond_to do |format|
+        if @micropost.save
+          format.html { redirect_to micropost_url(@micropost), notice: "Micropost was successfully created." }
+          format.json { render :show, status: :created, location: @micropost }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @micropost.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

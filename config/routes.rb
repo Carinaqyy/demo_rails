@@ -8,6 +8,12 @@ Rails.application.routes.draw do
       resources :comments
     end
   end
+  resources :users, only: [:show] do
+    resources :microposts, only: [:new, :create]
+  end
+  resources :users do
+    resources :microposts, only: [:new, :create]
+  end
   resources :users
   resources :microposts
   resources :comments
