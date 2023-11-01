@@ -21,17 +21,10 @@
       <strong>Post Body:</strong>
       <%= micropost.content %>
     </p>
+    <%= link_to "Show this micropost", user_micropost_path(@user, micropost) %>
+  <% end %>
 </ul>
-<% end %>
 
 
-<h2>Add a micropost:</h2>
-<%= form_with model: @micropost do |form| %>
-  <p>
-    <%= form.label :body %><br>
-    <%= form.text_area :body %>
-  </p>
-  <p>
-    <%= form.submit %>
-  </p>
-<% end %>
+<%= link_to "New Micropost", new_user_micropost_path(@user) %>
+

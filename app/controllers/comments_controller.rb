@@ -13,6 +13,15 @@ class CommentsController < ApplicationController
 
   # GET /comments/new
   def new
+
+    puts "IN COMMENTS NEW"
+    puts params
+    @commenter = User.find(params[:user_id])
+    @micropost = Micropost.find(params[:micropost_id])
+
+    # if params[:comment].key?(:micropost_id)
+    #   @micropost = Micropost.find(params[:micropost_id])
+    # end
     @comment = Comment.new
   end
 
@@ -22,16 +31,40 @@ class CommentsController < ApplicationController
 
   # POST /comments or /comments.json
   def create
-    @comment = Comment.new(comment_params)
+    puts "PARAMS:"
+    puts params
+    # puts params[:comment]
+    if params[:comment].key?(:micropost_id)
+      # if the micropost doesn't exist, return an error
+      puts "HERE"
+      @micropost = Micropost.find(params[:comment][:micropost_id]) # not finding it?
+      # @comment = Comment.new(comment_params)
+      puts "HERE2"
+      @comment = @micropost.comments.build(comment_params)
 
-    respond_to do |format|
-      if @comment.save
-        format.html { redirect_to comment_url(@comment), notice: "Comment was successfully created." }
-        format.json { render :show, status: :created, location: @comment }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @comment.save
+          format.html { redirect_to comment_url(@comment), notice: "Comment was successfully created." }
+          format.json { render :show, status: :created, location: @comment }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @comment.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      @comment = Comment.new(comment_params)
+      # puts "COMMENT:"
+      # puts @comment
+      respond_to do |format|
+        if @comment.save
+          format.html { redirect_to comment_url(@comment), notice: "Comment was successfully created." }
+          format.json { render :show, status: :created, location: @comment }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @comment.errors, status: :unprocessable_entity }
+        end
+      end
+
     end
   end
 
@@ -66,6 +99,8 @@ class CommentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comment_params
+      # puts "params:"
+      # puts params
       params.require(:comment).permit(:commenter, :body, :micropost_id)
     end
 end

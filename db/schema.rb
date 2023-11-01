@@ -21,6 +21,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_31_223803) do
   end
 
   create_table "microposts", force: :cascade do |t|
+    t.string "title"
     t.text "content"
     t.integer "user_id"
     t.datetime "created_at", null: false
