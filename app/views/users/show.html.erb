@@ -7,4 +7,31 @@
   <%= link_to "Back to users", users_path %>
 
   <%= button_to "Destroy this user", @user, method: :delete %>
+
 </div>
+
+<h2>User's microposts:</h2>
+<ul>
+  <% @user.microposts.each do |micropost| %>
+    <p>
+      <strong>User id:</strong>
+      <%= micropost.user_id %>
+    </p>
+    <p>
+      <strong>Post Body:</strong>
+      <%= micropost.content %>
+    </p>
+</ul>
+<% end %>
+
+
+<h2>Add a micropost:</h2>
+<%= form_with model: @micropost do |form| %>
+  <p>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
