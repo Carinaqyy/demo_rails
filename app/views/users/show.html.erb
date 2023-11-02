@@ -1,5 +1,7 @@
 <p style="color: green"><%= notice %></p>
 
+<h2>User's Information</h2>
+
 <%= render @user %>
 
 <div>
@@ -10,7 +12,7 @@
 
 </div>
 
-<h2>User's microposts:</h2>
+<h3>User's microposts</h3>
 <ul>
   <% @user.microposts.each do |micropost| %>
     <p>

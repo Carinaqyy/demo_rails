@@ -11,26 +11,18 @@ class MicropostsController < ApplicationController
 
   # GET /microposts/1 or /microposts/1.json
   def show
-    puts "IN SHOW"
-    puts params
-    # @user = User.find(params[:user_id])
     if params.key?(:user_id)
       @user = User.find(params[:user_id])
-      puts "HAVE USER"
     end
     @micropost = Micropost.find(params[:id])
   end
 
   # GET /microposts/new
   def new
-    puts "MICROPOST PARAMS"
-    puts params
     if params.key?(:user_id)
       @user = User.find(params[:user_id])
     end
-
     @micropost = Micropost.new
-    # @micropost = @user.microposts.build(micropost_params)
   end
 
   # GET /microposts/1/edit
@@ -45,9 +37,6 @@ class MicropostsController < ApplicationController
       puts "USERID EXISTS"
       @user = User.find(params[:user_id])
       @micropost = @user.microposts.build(micropost_params)
-
-    # @micropost = @user.microposts.create(micropost_params)
-    # redirect_to micropost_path(@user)
 
       respond_to do |format|
         if @micropost.save

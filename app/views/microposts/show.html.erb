@@ -11,6 +11,25 @@
   <%= link_to "Back to microposts", microposts_path %>
 </div>
 
+<h2>All Comments</h2>
+<ul>
+  <% @micropost.comments.each do |comment| %>
+    <li>
+      <p>
+        <strong>Commenter:</strong>
+        <%= comment.commenter %>
+      </p>
+      <p>
+        <strong>Comment Body:</strong>
+        <%= comment.body %>
+      </p>
+      <p>
+        <%= link_to "Show this comment", comment %>
+      </p>
+    </li>
+  <% end %>
+</ul>
+
 <h2>Post Comments</h2>
 
 <% if defined?(@user) %>

@@ -62,7 +62,10 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      @user = User.find_by(id: params[:id])
+      if @user == nil
+        render :file => "#{Rails.root}/public/404.html",  :status => 404
+      end
     end
 
     # Only allow a list of trusted parameters through.
