@@ -31,6 +31,8 @@ class CommentsController < ApplicationController
 
   # GET /comments/1/edit
   def edit
+    @comment = Comment.find(params[:id])
+    @micropost = Micropost.find(@comment.micropost_id)
   end
 
   # POST /comments or /comments.json
