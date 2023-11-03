@@ -8,6 +8,10 @@ class CommentsController < ApplicationController
 
   # GET /comments/1 or /comments/1.json
   def show
+    if params.key?(:user_id)
+      @user = User.find(params[:user_id])
+    end
+    @micropost = Micropost.find(params[:micropost_id])
     @comment = Comment.find(params[:id])
   end
 

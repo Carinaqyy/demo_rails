@@ -15,15 +15,17 @@
 <h3>User's microposts</h3>
 <ul>
   <% @user.microposts.each do |micropost| %>
-    <p>
-      <strong>User id:</strong>
-      <%= micropost.user_id %>
-    </p>
-    <p>
-      <strong>Post Body:</strong>
-      <%= micropost.content %>
-    </p>
-    <%= link_to "Show this micropost", user_micropost_path(@user, micropost) %>
+    <li>
+      <p>
+        <strong>Post Title:</strong>
+        <%= micropost.title %>
+      </p>
+      <p>
+        <strong>Post Body:</strong>
+        <%= micropost.content %>
+      </p>
+      <%= link_to "Show this micropost", user_micropost_path(@user, micropost) %>
+    </li>
   <% end %>
 </ul>
 

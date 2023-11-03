@@ -4,7 +4,12 @@
 
 <div>
   <%= link_to "Edit this comment", edit_comment_path(@comment) %> |
-  <%= link_to "Back to comments", comments_path %>
+  <% if defined?(@user) %>
+    <%= link_to "Back to this micropost", user_micropost_path(@user, @micropost) %> |
+  <% else %>
+    <%= link_to "Back to this micropost", micropost_path(@micropost) %>
+  <% end %>
+  <%= link_to "Back to all comments", comments_path %>
 
   <%= button_to "Destroy this comment", @comment, method: :delete %>
 </div>

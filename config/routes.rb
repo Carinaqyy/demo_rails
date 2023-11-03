@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   root "users#index"
 
+  # resources :users do
+  #   resources :microposts
+  #   resources :comments
+  # end
   resources :users do
     resources :microposts do
       resources :comments
