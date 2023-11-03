@@ -3,13 +3,18 @@
 <%= render @comment %>
 
 <div>
-  <%= link_to "Edit this comment", edit_comment_path(@comment) %> |
-  <% if defined?(@user) %>
-    <%= link_to "Back to this micropost", user_micropost_path(@user, @micropost) %> |
+  <% if defined?(@user) and @user.id == @comment.user_id%>
+    <%= link_to "Edit this comment", edit_comment_path(@comment) %> |
+    <%= link_to "Back to the user", user_path(@user) %>
+    <% if defined?(@micropost) %>
+      <%= link_to "Back to this micropost", user_micropost_path(@user, @micropost) %> |
+    <% end %>
+    <%= button_to "Destroy this comment", @comment, method: :delete %>
   <% else %>
-    <%= link_to "Back to this micropost", micropost_path(@micropost) %>
+    <% if defined?(@micropost) %>
+      <%= link_to "Back to this micropost", micropost_path(@micropost) %> |
+    <% end %>
   <% end %>
   <%= link_to "Back to all comments", comments_path %>
 
-  <%= button_to "Destroy this comment", @comment, method: :delete %>
 </div>

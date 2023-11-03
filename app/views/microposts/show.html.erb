@@ -26,8 +26,16 @@
         <%= comment.body %>
       </p>
       <p>
+        <!-- <%= link_to "Show this comment", micropost_comment_path(@micropost, comment) %> -->
         <!-- <%= link_to "Show this comment", comment %> -->
-        <%= link_to "Show this comment", micropost_comment_path(@micropost) %>
+
+
+        <% if defined?(@user) %>
+          <%= link_to "Show this comment", user_micropost_comment_path(@user, @micropost, comment) %>
+        <% else %>
+          <%= link_to "Show this comment", micropost_comment_path(@micropost, comment) %>
+        <% end %>
+
       </p>
     </li>
   <% end %>
@@ -39,5 +47,5 @@
 <% if defined?(@user) %>
   <%= link_to "New Comment", new_user_micropost_comment_path(@user, @micropost) %>
 <% else %>
-  <%= link_to "New Comment (no user)", new_micropost_comment_path(@micropost) %>
+  <%= link_to "New Comment", new_micropost_comment_path(@micropost) %>
 <% end %>

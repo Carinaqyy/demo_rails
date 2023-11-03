@@ -29,6 +29,22 @@
   <% end %>
 </ul>
 
+<h3>User's Comments</h3>
+<ul>
+  <% @user.comments.each do |comment| %>
+    <li>
+      <p>
+        <strong>Commenter:</strong>
+        <%= comment.commenter %>
+      </p>
+      <p>
+        <strong>Comment Body:</strong>
+        <%= comment.body %>
+      </p>
+      <%= link_to "Show this comment", user_comment_path(@user, comment) %>
+    </li>
+  <% end %>
+</ul>
 
 <%= link_to "New Micropost", new_user_micropost_path(@user) %>
 

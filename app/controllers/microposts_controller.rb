@@ -15,6 +15,7 @@ class MicropostsController < ApplicationController
       @user = User.find(params[:user_id])
     end
     @micropost = Micropost.find(params[:id])
+    @comment = @micropost.comments
   end
 
   # GET /microposts/new
@@ -31,10 +32,7 @@ class MicropostsController < ApplicationController
 
   # POST /microposts or /microposts.json
   def create
-    puts "IN CREATE"
-    puts params
     if params.key?(:user_id)
-      puts "USERID EXISTS"
       @user = User.find(params[:user_id])
       @micropost = @user.microposts.build(micropost_params)
 
@@ -48,7 +46,6 @@ class MicropostsController < ApplicationController
         end
       end
     else
-      puts "USERID DOES NOT EXIST"
       @micropost = Micropost.new(micropost_params)
       respond_to do |format|
         if @micropost.save

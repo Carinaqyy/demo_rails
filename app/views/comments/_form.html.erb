@@ -15,7 +15,18 @@
   <div>
     <%= form.hidden_field :micropost_id, value: @micropost.id %>
   </div>
-
+  
+  <div>
+    <% if defined?(@user) %>
+      <%= form.hidden_field :user_id, value: @user.id %>
+      <% puts "User ID: #{@user.id}" %>
+    <% else %>
+      <% puts "Testing branch" %>
+      <%= form.label :user_id, style: "display: block" %>
+      <%= form.number_field :user_id %>
+    <% end %>
+  </div>
+  
   <div>
     <%= form.label :commenter, style: "display: block" %>
     <%= form.text_field :commenter %>
@@ -25,7 +36,6 @@
     <%= form.label :body, style: "display: block" %>
     <%= form.text_area :body %>
   </div>
-
 
   <div>
     <%= form.submit %>
