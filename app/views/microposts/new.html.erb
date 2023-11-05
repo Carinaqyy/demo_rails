@@ -1,0 +1,17 @@
+<h1>New micropost</h1>
+
+<%= render "form", micropost: @micropost %>
+
+<br>
+
+<div>
+  <%= link_to "Back to all microposts", microposts_path %>
+</div>
+
+<br>
+
+<div>
+  <% if defined?(@user) %>
+    <%= link_to "Back to this user", user_path(@user) %>
+  <% end %>
+</div>

@@ -1,0 +1,35 @@
+<p style="color: green"><%= notice %></p>
+
+<h2> Comment Information </h2>
+<%= render @comment %>
+
+<h2>Options</h2>
+<div>
+  <% if defined?(@user) and @user.id == @comment.user_id %>
+    <%= button_to "Destroy this comment", @comment, method: :delete %>
+    <% if defined?(@micropost) %>
+      <%= link_to "Edit this comment", edit_user_micropost_comment_path(@user, @micropost, @comment) %>
+    <% end %>
+  <% end %>
+</div>
+
+<br>
+
+<div>
+  <% if defined?(@user) and @user.id == @comment.user_id %>
+    <%= link_to "Back to the user", user_path(@user) %>
+    <br>
+    <% if defined?(@micropost) %>
+      <%= link_to "Back to this micropost", user_micropost_path(@user, @micropost) %>
+    <% end %>
+  <% else %>
+    <% if defined?(@micropost) %>
+      <%= link_to "Back to this micropost", micropost_path(@micropost) %>
+    <% end %>
+  <% end %>
+</div>
+
+<div>
+  <%= link_to "Back to all comments", comments_path %>
+</div>
+
