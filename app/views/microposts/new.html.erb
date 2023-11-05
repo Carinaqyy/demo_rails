@@ -5,5 +5,13 @@
 <br>
 
 <div>
-  <%= link_to "Back to microposts", microposts_path %>
+  <%= link_to "Back to all microposts", microposts_path %>
+</div>
+
+<br>
+
+<div>
+  <% if defined?(@user) %>
+    <%= link_to "Back to this user", user_path(@user) %>
+  <% end %>
 </div>

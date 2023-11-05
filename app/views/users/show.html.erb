@@ -1,30 +1,70 @@
 <p style="color: green"><%= notice %></p>
 
+<h2>User's Information</h2>
+
 <%= render @user %>
 
+<h2>Options</h2>
 <div>
-  <%= link_to "Edit this user", edit_user_path(@user) %> |
-  <%= link_to "Back to users", users_path %>
+  <%= link_to "Edit this user", edit_user_path(@user) %>
+  <br>
 
   <%= button_to "Destroy this user", @user, method: :delete %>
 
 </div>
 
-<h2>User's microposts:</h2>
+<h3>User's microposts</h3>
 <ul>
   <% @user.microposts.each do |micropost| %>
-    <p>
-      <strong>User id:</strong>
-      <%= micropost.user_id %>
-    </p>
-    <p>
-      <strong>Post Body:</strong>
-      <%= micropost.content %>
-    </p>
-    <%= link_to "Show this micropost", user_micropost_path(@user, micropost) %>
+    <li>
+      <p>
+        <strong>Post Title:</strong>
+        <%= micropost.title %>
+      </p>
+      <p>
+        <strong>Post Body:</strong>
+        <%= micropost.content %>
+      </p>
+      <%= link_to "Show this micropost", user_micropost_path(@user, micropost) %>
+    </li>
   <% end %>
 </ul>
 
+<h3>User's Comments</h3>
+<ul>
+  <% @user.comments.each do |comment| %>
+    <li>
+      <p>
+        <strong>Commenter:</strong>
+        <%= comment.commenter %>
+      </p>
+      <p>
+        <strong>Comment Body:</strong>
+        <%= comment.body %>
+      </p>
+      <p>
+        <strong>Micropost Id:</strong>
+        <%= comment.micropost_id %>
+      </p>
+      <%= link_to "Show this comment", user_comment_path(@user, comment) %>
+    </li>
+  <% end %>
+</ul>
 
+<div>
 <%= link_to "New Micropost", new_user_micropost_path(@user) %>
+
+</div>
+
+<br>
+
+<div>
+<%= link_to "All Micropost", user_microposts_path(@user) %>
+</div>
+
+<br>
+
+<div>
+  <%= link_to "Back to users", users_path %>
+</div>
 

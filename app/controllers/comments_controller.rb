@@ -8,43 +8,43 @@ class CommentsController < ApplicationController
 
   # GET /comments/1 or /comments/1.json
   def show
+    if params.key?(:user_id)
+      @user = User.find(params[:user_id])
+    end
+    if params.key?(:micropost_id)
+      @micropost = Micropost.find(params[:micropost_id])
+    end
     @comment = Comment.find(params[:id])
   end
 
   # GET /comments/new
   def new
-
-    puts "IN COMMENTS NEW"
-    puts params
-    @commenter = User.find(params[:user_id])
+    if params.key?(:user_id)
+      @user = User.find(params[:user_id])
+    end
     @micropost = Micropost.find(params[:micropost_id])
-
-    # if params[:comment].key?(:micropost_id)
-    #   @micropost = Micropost.find(params[:micropost_id])
-    # end
     @comment = Comment.new
   end
 
   # GET /comments/1/edit
   def edit
+    if params.key?(:user_id)
+      @user = User.find(params[:user_id])
+    end
+    @micropost = Micropost.find(params[:micropost_id])
   end
 
   # POST /comments or /comments.json
   def create
-    puts "PARAMS:"
-    puts params
-    # puts params[:comment]
-    if params[:comment].key?(:micropost_id)
+    if params.key?(:user_id)
       # if the micropost doesn't exist, return an error
-      puts "HERE"
-      @micropost = Micropost.find(params[:comment][:micropost_id]) # not finding it?
-      # @comment = Comment.new(comment_params)
-      puts "HERE2"
-      @comment = @micropost.comments.build(comment_params)
-
+      @micropost = Micropost.find(params[:micropost_id])
+      @user = User.find(params[:user_id])
+      # @comment = @micropost.comments.build(comment_params)
+      @comment = Comment.new(comment_params)
       respond_to do |format|
         if @comment.save
-          format.html { redirect_to comment_url(@comment), notice: "Comment was successfully created." }
+          format.html { redirect_to user_micropost_comment_url(@user, @micropost, @comment), notice: "Comment was successfully created." }
           format.json { render :show, status: :created, location: @comment }
         else
           format.html { render :new, status: :unprocessable_entity }
@@ -52,19 +52,19 @@ class CommentsController < ApplicationController
         end
       end
     else
+      @micropost = Micropost.find(params[:micropost_id])
       @comment = Comment.new(comment_params)
-      # puts "COMMENT:"
-      # puts @comment
+
       respond_to do |format|
         if @comment.save
-          format.html { redirect_to comment_url(@comment), notice: "Comment was successfully created." }
+          # format.html { redirect_to comment_url(@comment), notice: "Comment was successfully created." }
+          format.html { redirect_to micropost_comment_url(@micropost, @comment), notice: "Comment was successfully created." }
           format.json { render :show, status: :created, location: @comment }
         else
           format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @comment.errors, status: :unprocessable_entity }
         end
       end
-
     end
   end
 
@@ -99,8 +99,6 @@ class CommentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comment_params
-      # puts "params:"
-      # puts params
-      params.require(:comment).permit(:commenter, :body, :micropost_id)
+      params.require(:comment).permit(:commenter, :body, :micropost_id, :user_id)
     end
 end

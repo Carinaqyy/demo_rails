@@ -22,8 +22,12 @@
   </div>
 
   <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.number_field :user_id %>
+    <% if !defined?(@user) %>
+      <%= form.label :user_id, style: "display: block" %>
+      <%= form.number_field :user_id %>
+    <% else %>
+      <%= form.hidden_field :user_id, value: @user.id %>
+    <% end %>
   </div>
 
   <div>
